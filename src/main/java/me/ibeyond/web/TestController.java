@@ -18,7 +18,7 @@ import me.ibeyond.vo.Book;
 @RequestMapping("/")
 public class TestController {
 
-	
+	//----------------------
 	@RequestMapping(value = "validator", method = RequestMethod.POST)
 	public Map<String,Object> validator(@RequestBody @Valid Book book, Errors errors) {
 		System.out.println(book);
