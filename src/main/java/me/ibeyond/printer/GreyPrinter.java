@@ -1,7 +1,6 @@
 package me.ibeyond.printer;
 
 import org.springframework.beans.factory.annotation.Value;
-
 public class GreyPrinter implements Printer {
 	@Value("${test.sex}")
 	private String sex;
