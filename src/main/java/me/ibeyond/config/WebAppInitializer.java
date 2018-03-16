@@ -1,8 +1,10 @@
 package me.ibeyond.config;
 
+import javax.servlet.Filter;
 import javax.servlet.MultipartConfigElement;
 import javax.servlet.ServletRegistration.Dynamic;
 
+import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer
@@ -23,18 +25,24 @@ public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServlet
 		return new String[] { "/" };
 	}
 
+	/**
+	 * servlet文件上传配置
+	 */
 	@Override
 	protected void customizeRegistration(Dynamic registration) {
 		registration.setMultipartConfig(new MultipartConfigElement("C:\\temp",4000001,400000000,0));
 		super.customizeRegistration(registration);
 	}
 
-//	@Override
-//	protected Filter[] getServletFilters() {
-//		CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter();
-//		characterEncodingFilter.setEncoding("utf-8");
-//		return new Filter[] { characterEncodingFilter };
-//	}
+	/**
+	 * EncodingFilter
+	 */
+	@Override
+	protected Filter[] getServletFilters() {
+		CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter();
+		characterEncodingFilter.setEncoding("utf-8");
+		return new Filter[] { characterEncodingFilter };
+	}
 	
 	
 

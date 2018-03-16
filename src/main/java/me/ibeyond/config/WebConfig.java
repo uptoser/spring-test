@@ -3,7 +3,9 @@ package me.ibeyond.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.web.multipart.MultipartResolver;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
@@ -27,39 +29,39 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 		resolver.setSuffix(".jsp");
 		return resolver;
 	}
-	
+
 	@Bean
-	public MultipartResolver multipartResolver(){
+	public MultipartResolver multipartResolver() {
+		CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
+		multipartResolver.setMaxUploadSize(40000000);
+		return multipartResolver;
+	}
+
+	@Bean
+	public MultipartResolver multipartResolver2() {
 		return new StandardServletMultipartResolver();
 	}
-	
-	@Override//静态资源？
+
+	@Override // 静态资源？
 	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
 		configurer.enable();
 	}
 
-	@Override//静态资源
+	@Override // 静态资源
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		//addResourceLocations指的是文件放置的目录，addResourceHandler指的是对外暴露的访问路径。
+		// addResourceLocations指的是文件放置的目录，addResourceHandler指的是对外暴露的访问路径。
 		registry.addResourceHandler("/js/**").addResourceLocations("classpath:/js/");
 	}
 
-	@Override//添加拦截器
+	@Override // 添加拦截器
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(new DemoInterceptor());
 	}
 
-	@Override//添加页面跳转
+	@Override // 添加页面跳转
 	public void addViewControllers(ViewControllerRegistry registry) {
-		registry.addViewController("index").setViewName("index");
+		registry.addViewController("uploadPage").setViewName("upload");
 		registry.addRedirectViewController("teset111", "aaa111");
 	}
-	
-	
-	
-	
-	
-	
-	
-	
+
 }
