@@ -10,6 +10,7 @@ import org.springframework.web.servlet.config.annotation.DefaultServletHandlerCo
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
@@ -46,6 +47,12 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 	@Override//添加拦截器
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(new DemoInterceptor());
+	}
+
+	@Override//添加页面跳转
+	public void addViewControllers(ViewControllerRegistry registry) {
+		registry.addViewController("index").setViewName("index");
+		registry.addRedirectViewController("teset111", "aaa111");
 	}
 	
 	
