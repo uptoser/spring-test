@@ -8,8 +8,12 @@ import org.springframework.web.multipart.support.StandardServletMultipartResolve
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
+
+import me.ibeyond.exception.DemoInterceptor;
 
 @Configuration
 @EnableWebMvc
@@ -28,10 +32,25 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 		return new StandardServletMultipartResolver();
 	}
 	
-	@Override
+	@Override//静态资源？
 	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
 		configurer.enable();
 	}
+
+	@Override//静态资源
+	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+		//addResourceLocations指的是文件放置的目录，addResourceHandler指的是对外暴露的访问路径。
+		registry.addResourceHandler("/js/**").addResourceLocations("classpath:/js/");
+	}
+
+	@Override//添加拦截器
+	public void addInterceptors(InterceptorRegistry registry) {
+		registry.addInterceptor(new DemoInterceptor());
+	}
+	
+	
+	
+	
 	
 	
 	
