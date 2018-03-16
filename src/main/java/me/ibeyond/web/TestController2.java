@@ -29,7 +29,7 @@ public class TestController2 {
 
 	@RequestMapping(value = "testException", method = RequestMethod.POST)
 	public String test111(@ModelAttribute("msg") String a) {
-		System.out.println(a);
+		System.out.println(a);//
 		throw new Test1Exception();
 	}
 
